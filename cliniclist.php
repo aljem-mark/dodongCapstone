@@ -1,5 +1,4 @@
 <?php include'header.php'; ?>
-    <?php include'nav.php'; ?>
 
         <div class="container-fluid">
             <div class="row justify-content-center">
@@ -39,7 +38,7 @@
 
 										while ($row = mysqli_fetch_array($rs)) {
 											$filename = $row['filename'] ? "uploads/" . $row['filename'] : "img/loc.png";
-											$appointBtn = isset($_SESSION['uid']) ? "<a class=\"btn btn-primary btn-sm\" style =\"margin:5px;\" href=\"appointment.php?clinic_id=".$row['id']."\">Request Appointment</a></td>" : "";
+											$appointBtn = "<a class=\"btn btn-primary btn-sm\" style =\"margin:5px;\" href=\"appointment.php?clinic_id=".$row['id']."\">Request Appointment</a></td>";
 
 											echo 
 												"<tr>".

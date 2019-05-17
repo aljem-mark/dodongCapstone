@@ -1,0 +1,44 @@
+<?php include'config.php'; ?>
+
+<?php
+
+    if (isset($_POST['accept']) && $_POST['accept']) {
+        $updateQuery = "UPDATE `appointments`
+            SET `status`='" . $_POST['accept'] . "',
+            `appointment_date`='" . $_POST['appointment_date'] . "'
+            WHERE `id`=" . $_POST['id'];
+
+        $updateResult = mysqli_query($con, $updateQuery);
+
+        http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
+    }
+
+    if (isset($_POST['decline']) && $_POST['decline']) {
+        $updateQuery = "UPDATE `appointments`
+            SET `status`='" . $_POST['decline'] . "'
+            WHERE `id`=" . $_POST['id'];
+
+        $updateResult = mysqli_query($con, $updateQuery);
+
+        http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
+    }
+
+    if (isset($_POST['done']) && $_POST['done']) {
+        $updateQuery = "UPDATE `appointments`
+            SET `status`='" . $_POST['done'] . "'
+            WHERE `id`=" . $_POST['id'];
+
+        $updateResult = mysqli_query($con, $updateQuery);
+
+        http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
+    }
+
+    if (isset($_POST['cancel']) && $_POST['cancel']) {
+        $updateQuery = "UPDATE `appointments`
+            SET `status`='" . $_POST['cancel'] . "'
+            WHERE `id`=" . $_POST['id'];
+
+        $updateResult = mysqli_query($con, $updateQuery);
+
+        http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
+    }
