@@ -1,0 +1,73 @@
+.custom-navbar {
+	z-index: 100;
+}
+
+.custom-navbar-brand {
+	color: darkblue;
+}
+
+.modal-body .mapouter,
+.modal-body .gmap_canvas,
+.modal-body iframe {
+	max-width: 100%;
+}
+
+.sidebar {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 100;
+	padding-top: 56px;
+}
+
+.sidebar-sticky {
+	position: relative;
+	top: 0;
+	height: calc(100vh - 56px);
+	padding-top: 10px;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+}
+.text-color{
+	color: #212529;
+}
+
+.custom-nav-icon {
+	width: 30px;
+	margin-right: 5px;
+}
+.btn-block {
+
+    display: block;
+    width: 100%;
+}
+.custom-control-input {
+
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+
+}
+.custom-control-label {
+
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+
+}
+.small, small {
+
+    font-size: 80%;
+    font-weight: 400;
+}
+.p-5 {
+
+    padding: 3rem !important;
+        padding-top: 3rem;
+        padding-right: 3rem;
+        padding-bottom: 3rem;
+        padding-left: 3rem;
+
+}

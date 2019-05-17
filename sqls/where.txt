@@ -1,0 +1,13 @@
+
+,id Ascending = '".$_POST['x']."'
+,fname = '".$_POST['x']."'
+,mname = '".$_POST['x']."'
+,lname = '".$_POST['x']."'
+,email = '".$_POST['x']."'
+,pass = '".$_POST['x']."'
+,gender = '".$_POST['x']."'
+,description = '".$_POST['x']."'
+,address = '".$_POST['x']."'
+,type = '".$_POST['x']."'
+,contact = '".$_POST['x']."'
+,created = '".$_POST['x']."'
