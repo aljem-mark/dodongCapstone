@@ -20,10 +20,13 @@
 					$_SESSION['ClinicID'] = $row['idClinic'];
 
 					if ($row['type'] == 2) {
+						$_SESSION['homepage'] = "dentist-index.php";
 						header("location: dentist-index.php");
 					} elseif ($row['type'] == 1) {
+						$_SESSION['homepage'] = "admin.php";
 						header("location: admin.php");
 					} else {
+						$_SESSION['homepage'] = "index.php";
 						header("location: index.php");
 					}
 				}

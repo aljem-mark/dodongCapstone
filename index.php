@@ -23,12 +23,18 @@
 			    ">
 		<div class="container-fluid" style="height: 100vh">
 			<div class="row flex-column">
-				<div class="col row my-3">
-					<div class="col-auto ml-auto">
-						<a href="login.php" class="btn btn-outline-secondary btn-lg font-weight-bold mr-3" name="clinic">Sign in</a>
-						<a href="register.php" class="btn btn-primary btn-lg font-weight-bold" name="clinic">Sign up</a>
+
+				<?php if(!isset($_SESSION['uid'])) : ?>
+
+					<div class="col row my-3">
+						<div class="col-auto ml-auto">
+							<a href="login.php" class="btn btn-outline-secondary btn-lg font-weight-bold mr-2" name="clinic">Sign in</a>
+							<a href="register.php" class="btn btn-primary btn-lg font-weight-bold" name="clinic">Sign up</a>
+						</div>
 					</div>
-				</div>
+
+				<?php endif; ?>
+
 				<div class="col row justify-content-center align-items-center">
 					<div class="col-md-10">
 						<div class="row justify-content-center">

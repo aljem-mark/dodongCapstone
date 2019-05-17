@@ -102,7 +102,7 @@
 											break;
 										
 										default:
-											# code...
+											$statusClass = "warning";
 											break;
 									}
 
@@ -119,12 +119,12 @@
 										<!-- Trigger Accept Modal -->
 										<button type="button" data-toggle="modal" data-target="#acceptRequestModal" data-id="<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Accept</button>
 										<!-- Decline Appointment -->
-										<button type="submit" value="declined" name="decline" class="btn btn-danger btn-sm">Decline</button>
+										<button type="submit" value="declined" name="action" class="btn btn-danger btn-sm">Decline</button>
 									
 									<?php elseif($row['status'] == 'accepted') : ?>
 
-										<button type="submit" value="done" name="done" class="btn btn-success btn-sm">Done</button>
-										<button type="submit" value="cancelled" name="cancel" class="btn btn-secondary btn-sm">Cancel</button>
+										<button type="submit" value="done" name="action" class="btn btn-success btn-sm">Done</button>
+										<button type="submit" value="cancelled" name="action" class="btn btn-secondary btn-sm">Cancel</button>
 									
 									<?php endif; ?>
 									
@@ -156,12 +156,12 @@
 
 						<div class="form-group">
 							<label for="appointmentDate">Appointment Date *</label>
-							<input type="date" class="form-control" name="appointment_date" id="appointmentDate" placeholder="Full Name" required>
+							<input type="date" min="<?php echo date('Y-m-d'); ?>" class="form-control" name="appointment_date" id="appointmentDate" placeholder="Full Name" required>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" name="accept" class="btn btn-primary" value="accepted">Submit</button>
+						<button type="submit" name="action" class="btn btn-primary" value="accepted">Submit</button>
 					</div>
 				</div>
 			</form>
