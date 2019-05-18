@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow navbar-expand-md">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="<?php echo $_SESSION['homepage']; ?>">Dental Finder</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="<?php echo isset($_SESSION['homepage']) ? $_SESSION['homepage'] : "index.php"; ?>">Dental Finder</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>

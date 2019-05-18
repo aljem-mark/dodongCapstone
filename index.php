@@ -1,6 +1,5 @@
-<?php 
-	include'config.php';
- ?>
+<?php include'config.php'; ?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -21,32 +20,30 @@
 			    background-repeat: no-repeat;
 			    background-size: cover;
 			    ">
-		<div class="container-fluid" style="height: 100vh">
-			<div class="row flex-column">
+		<div class="container-fluid<?php echo isset($_SESSION['uid']) ? ' d-flex align-items-center' : ''; ?>" style="min-height: 100vh">
 
-				<?php if(!isset($_SESSION['uid'])) : ?>
+		<?php if(!isset($_SESSION['uid'])) : ?>
 
-					<div class="col row my-3">
-						<div class="col-auto ml-auto">
-							<a href="login.php" class="btn btn-outline-secondary btn-lg font-weight-bold mr-2" name="clinic">Sign in</a>
-							<a href="register.php" class="btn btn-primary btn-lg font-weight-bold" name="clinic">Sign up</a>
-						</div>
+			<div class="row">
+				<div class="col-auto ml-auto my-3">
+					<a href="login.php" class="btn btn-outline-secondary btn-lg font-weight-bold mr-2" name="clinic">Sign in</a>
+					<a href="register.php" class="btn btn-primary btn-lg font-weight-bold" name="clinic">Sign up</a>
+				</div>
+			</div>
+
+		<?php endif; ?>
+			
+			<div class="row">
+				<div class="col justify-content-center align-items-center">
+					<div class="row justify-content-center">
+						<img class="img-resposive w-50 h-50" src="img/logo.png">
 					</div>
-
-				<?php endif; ?>
-
-				<div class="col row justify-content-center align-items-center">
-					<div class="col-md-10">
-						<div class="row justify-content-center">
-							<img class="img-resposive w-50 h-50" src="img/logo.png">
+					<div class="col-md-12 text-center">
+						<div>
+							<p style="font-family: century gothic">Search for Dental Clinic around Cagayan de Oro</p>
 						</div>
-						<div class="col-md-12 text-center">
-							<div>
-								<p style="font-family: century gothic">Search for Dental Clinic around Cagayan de Oro</p>
-							</div>
-							<div>
-								<a href="cliniclist.php" class="btn btn-info btn-lg" name="clinic">View List</a>
-							</div>
+						<div>
+							<a href="cliniclist.php" class="btn btn-info btn-lg" name="clinic">View List</a>
 						</div>
 					</div>
 				</div>

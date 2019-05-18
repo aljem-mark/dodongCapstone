@@ -2,52 +2,23 @@
 
 <?php
 
-
-    if ($_POST['action'] == 'accepted') {
-        $updateQuery = "UPDATE `appointments`
-            SET `status`='" . $_POST['accept'] . "',
-            `appointment_date`='" . $_POST['appointment_date'] . "'
-            WHERE `id`=" . $_POST['id'];
-
-        $updateResult = mysqli_query($con, $updateQuery);
-
-        http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
-    } else {
-        $updateQuery = "UPDATE `appointments`
-            SET `status`='" . $_POST['action']  . "'
-            WHERE `id`=" . $_POST['id'];
-
-        $updateResult = mysqli_query($con, $updateQuery);
-
-        http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
+    if(isset($_POST['filter']))
+    if($_POST['filter']) {
+        $getQueryString = "?".http_build_query($_POST);
     }
 
-    // if ($_POST['decline']) {
-    //     $updateQuery = "UPDATE `appointments`
-    //         SET `status`='" . $_POST['decline'] . "'
-    //         WHERE `id`=" . $_POST['id'];
+    if(isset($_POST['action']))
+    if($_POST['action']) {
+        $updateQuery = "UPDATE `appointments`
+            SET `status`='{$_POST['action']}'";
 
-    //     $updateResult = mysqli_query($con, $updateQuery);
+        if($_POST['action'] == 'accepted') {
+            $updateQuery .= ", `appointment_date`='{$_POST['appointment_date']}'";
+        }
 
-    //     http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
-    // }
+        $whereClause = "WHERE `id`={$_POST['id']}";
 
-    // if ($_POST['done']) {
-    //     $updateQuery = "UPDATE `appointments`
-    //         SET `status`='" . $_POST['done'] . "'
-    //         WHERE `id`=" . $_POST['id'];
+        $updateResult = mysqli_query($con, "{$updateQuery} {$whereClause}");
+    }
 
-    //     $updateResult = mysqli_query($con, $updateQuery);
-
-    //     http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
-    // }
-
-    // if ($_POST['cancel']) {
-    //     $updateQuery = "UPDATE `appointments`
-    //         SET `status`='" . $_POST['cancel'] . "'
-    //         WHERE `id`=" . $_POST['id'];
-
-    //     $updateResult = mysqli_query($con, $updateQuery);
-
-    //     http_response_code( 303 ); header( "Location: dentist-index.php" ); exit;
-    // }
+    http_response_code( 303 ); header( "Location: dentist-index.php{$getQueryString}" ); exit;

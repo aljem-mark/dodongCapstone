@@ -77,3 +77,12 @@ small {
 	padding-left: 3rem;
 
 }
+
+.sidebar .nav-link {
+	font-weight: 500;
+	color: #333;
+}
+
+.sidebar .nav-link.active {
+	color: #007bff;
+}

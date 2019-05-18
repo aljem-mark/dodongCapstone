@@ -61,7 +61,7 @@
 										B.price as iPrice ,
 										B.id as iServID
 										FROM clinic as A LEFT JOIN clinic_services as B on A.id = B.clinic_id 
-										WHERE A.id = '".$clinicId."';");
+										WHERE A.id = '".$clinicId."' AND B.enabled=1;");
 
 									while($rr = mysqli_fetch_assoc($selectc)){
 									
