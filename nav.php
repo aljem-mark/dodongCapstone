@@ -22,7 +22,7 @@
 											$initialQuery = "SELECT count(*) as status_count
 												FROM `appointments`";
 
-											$where[] = "WHERE status='pending'";
+											$where[] = "WHERE status='pending' AND clinic_id={$_SESSION['ClinicID']}";
 											$whereClause = implode(" AND ", $where);
 
 											$query = "{$initialQuery} {$whereClause}";
@@ -77,4 +77,4 @@
 			</div>
 		</nav>
 
-		<main role="main" class="col-md-9 ml-sm-auto col-lg-10" style="padding-top: 40px;">
+		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 mt-4" style="padding-top: 40px;">

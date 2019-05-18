@@ -43,11 +43,11 @@
 
 		if($filter['c'] != 'service_name') {
 			if($filter['c'] == 'date_created') {
-				$order[] = "service_name";
+				$order[] = "service_name " . strtoupper($filter['d']);
 			}
 
 			if($filter['c'] == 'date_updated') {
-				$order[] = "service_name";
+				$order[] = "service_name " . strtoupper($filter['d']);
 			}
 		}
 
@@ -60,7 +60,7 @@
 
 ?>
 
-	<div class="row align-items-end my-4">
+	<div class="row align-items-end mb-4">
 		<div class="col">
 			<h1 class="mb-0">Clinic Services</h1>
 		</div>
@@ -187,19 +187,19 @@
 								<form method="POST" action="dentist-services-action.php">
 									<input type="hidden" name="id" value="<?= $row['id']; ?>">
 
-										<!-- Trigger Modal -->
-										<button type="button" data-toggle="modal" data-target="#service-modal" data-action-type="Update" data-service='<?= json_encode($row); ?>' class="btn btn-primary btn-sm">Update</button>
+									<!-- Trigger Modal -->
+									<button type="button" data-toggle="modal" data-target="#service-modal" data-action-type="Update" data-service='<?= json_encode($row); ?>' class="btn btn-primary btn-sm">Update</button>
 
-										<!-- Set Service to Enable/Disable -->
-										<?php if($row['enabled']) : ?>
+									<!-- Set Service to Enable/Disable -->
+									<?php if($row['enabled']) : ?>
 
-											<button type="submit" value="disable" name="action" class="btn btn-danger btn-sm">Disable</button>
+										<button type="submit" value="disable" name="action" class="btn btn-danger btn-sm">Disable</button>
 
-										<?php else : ?>
+									<?php else : ?>
 
-											<button type="submit" value="enable" name="action" class="btn btn-success btn-sm">Enable</button>
-											
-										<?php endif; ?>
+										<button type="submit" value="enable" name="action" class="btn btn-success btn-sm">Enable</button>
+										
+									<?php endif; ?>
 									
 								</form>
 							</td>

@@ -51,15 +51,15 @@
 
 		if($filter['c'] != 'customer_name') {
 			if($filter['c'] == 'date_created') {
-				$order[] = "customer_name";
+				$order[] = "customer_name " . strtoupper($filter['d']);
 			}
 
 			if($filter['c'] == 'appointment_date') {
-				$order[] = "customer_name";
+				$order[] = "customer_name " . strtoupper($filter['d']);
 			}
 
 			if($filter['s'] != 'all') {
-				$order[] = "customer_name";
+				$order[] = "customer_name " . strtoupper($filter['d']);
 			}
 		}
 
@@ -72,7 +72,7 @@
 
 ?>
 
-	<div class="row my-4 align-items-end">
+	<div class="row mb-4 align-items-end">
 		<div class="col">
 			<h1 class="mb-0">Appointments</h1>
 		</div>
