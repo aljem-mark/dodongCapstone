@@ -116,7 +116,9 @@
 						<tr>
 							<td scope="row">
                                 <!-- Profile Image -->
-                                <div></div>
+                                <div>
+                                    <img src="<?= $row['filename'] ? "uploads/" . $row['filename'] : "img/loc.png"; ?>" style="max-width: 200px;"/>
+                                </div>
                             </td>
 							<td>
                                 <div class="row mb-4">
