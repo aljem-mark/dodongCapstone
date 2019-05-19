@@ -13,7 +13,7 @@
 	}
 
 	$initialQuery = "SELECT c.*,
-        GROUP_CONCAT(DISTINCT CONCAT(cs.service_name,'<!!!>',cs.price) ORDER BY cs.service_name ASC SEPARATOR '|') as services,
+        GROUP_CONCAT(DISTINCT CONCAT(cs.service_name,'<!!!>',cs.price,'<!!!>',cs.enabled) ORDER BY cs.service_name ASC SEPARATOR '|') as services,
         u.filename
         FROM `clinic` as c
         LEFT JOIN `clinic_services` as cs
@@ -21,7 +21,8 @@
         LEFT JOIN `uploads` as u
         ON u.id=c.profile_media_id";
 
-	$where[] = "cs.enabled=1";
+    $where = [];
+    $where[] = "c.status='verified'";
 	
 	if($filter['f']) {
 		$filterWhere = [];
@@ -44,19 +45,21 @@
 		}
 
 		$orderClause = "ORDER BY " . implode(", ", $order);
-	}
-	
-	$whereClause = "WHERE " . implode(" AND ", $where);
+    }
 
-    $query = "{$initialQuery} {$whereClause} GROUP BY cs.clinic_id {$orderClause}";
+	if($where) {
+        $whereClause = "WHERE ";
+    } else {
+        $whereClause = "";
+    }
+
+	$whereClause .= implode(" AND ", $where);
+
+    $query = "{$initialQuery} {$whereClause} GROUP BY c.id {$orderClause}";
 
 ?>
 
-    <div class="row mt-4 align-items-end">
-        <div class="col">
-            <h1 class="mb-0">Dental Finder</h1>
-        </div>
-    </div>
+    <h1 class="sr-only mb-0">Dental Finder</h1>
 
 	<div class="row my-4">
 		<div class="col">
@@ -147,10 +150,10 @@
 							<td>
 
                                 <?php
+
+                                    if ($row['services']) :
                                 
                                     $services = explode("|", $row['services']);
-
-                                    if ($services) :
 
                                 ?>
                                 
@@ -158,15 +161,14 @@
 
                                     <?php
                                 
-                                        foreach ($services as $key => $value) :
-
+                                        if ($services) foreach ($services as $key => $value) :
                                             $service = explode("<!!!>", $value);
-
                                             $serviceName = $service[0];
                                             $servicePrice = number_format($service[1], 2);
+                                            $serviceStatus = $service[2];
                                     ?>
 
-                                        <li class='list-group-item'>
+                                        <li class='list-group-item <?= $serviceStatus ? '' : 'list-group-item-danger' ; ?>'>
                                             <div class="row justify-content-between">
                                                 <div class="col-auto">
                                                     <h6 class="mb-0"><?= $serviceName; ?></h6>
@@ -180,6 +182,12 @@
                                     <?php endforeach; ?>
 
                                 </ul>
+
+                                <?php else : ?>
+
+                                    <li class='list-group-item list-group-item-info'>
+                                        <h6 class="mb-0">No services registered</h6>
+                                    </li>
 
                                 <?php endif; ?>
 

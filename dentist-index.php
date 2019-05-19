@@ -1,7 +1,8 @@
 <?php include 'header.php'; ?>
+<?php include 'auth-checker.php'; ?>
 
 <?php
-
+	
 	if(isset($_GET['filter'])) {
 		$filter = $_GET;
 	} else {
@@ -72,7 +73,7 @@
 
 ?>
 
-	<div class="row mb-4 align-items-end">
+	<div class="row my-4 align-items-end">
 		<div class="col">
 			<h1 class="mb-0">Appointments</h1>
 		</div>

@@ -2,16 +2,8 @@
 
 	<?php $clinicId = $_GET['clinic_id']; ?>
 
-	<div class="row">
-		<div class="col-auto">
-			<div class="my-3">
-				<a class="btn btn-secondary" href="cliniclist.php" role="button"><i class="fas fa-arrow-left"></i></a>
-			</div>
-		</div>
-	</div>
-
 	<div class="row justify-content-center">
-		<div class="col-lg-8 col-sm-10">
+		<div class="col-lg-4 col-md-6 col-sm-10">
 
 			<?php if( isset($_SESSION['success']) && $_SESSION['success'] ) { ?>
 
@@ -78,6 +70,7 @@
 								<textarea class="form-control" id="descriptionid" name="description" rows="3" required placeholder="Description"></textarea>
 							</div>
 							<input type="submit" class="btn btn-primary" name="save" value="Submit">
+							<a class="btn btn-secondary" href="cliniclist.php" role="button">Cancel</a>
 					</div>
 				</div>
 			</form>

@@ -33,68 +33,72 @@
 			}
 		}
 	?>
+	
 
-	<div class="container">
-		<div class="row justify-content-center align-items-center" style="height: 100vh">
-			<div class="col-lg-5 col-md-8 col-sm-10 col-12" >
-				<div class="card o-hidden border-0 shadow-lg my-5">
-					<div class="col-md-12">
-					<?php if(isset($_SESSION['userFullname']) && $_SESSION['userFullname']) { ?>
-						<?php } else {?>
-							<div class="input-group">  
-								<form action="" method="POST">
-								<div class="form-group p-5">
-									<div class="row">
-										<div class="col-md-12 col-xs-6">
+	<div style="background-image: url(img/doc1.jpg);
+				background-attachment: fixed;
+			    background-position: center;
+			    background-repeat: no-repeat;
+				background-size: cover;
+				height: 100vh;
+				width: 100vw;
+				position: fixed;
+				z-index: -1;"
+	></div>
 
-												<div class="text-center">
-													<h1>Welcome</h1>
-													<hr>
-												</div>
+	<div class="row justify-content-center align-items-center">
+		<div class="col-lg-3 col-md-5 col-12" >
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<?php if(isset($_SESSION['userFullname']) && $_SESSION['userFullname']) : ?>
+				<?php else : ?>
+					<form action="" method="POST">
+						<div class="form-group p-5">
+							<div class="row">
+								<div class="col-md-12 col-xs-6">
 
-												<?php if( isset($_SESSION['error']) && $_SESSION['error'] ) { ?>
-													<div class="alert alert-danger" role="alert">
-														<?php
-															echo $_SESSION['error'];
-															unset($_SESSION['error']);
-														?>
-													</div>
-												<?php } ?>
+									<div class="text-center">
+										<h1>Welcome</h1>
+										<hr>
+									</div>
 
-												<?php if( isset($_SESSION['success']) && $_SESSION['success'] ) { ?>
-													<div class="alert alert-success" role="alert">
-														<?php
-															echo $_SESSION['success'];
-															unset($_SESSION['success']);
-														?>
-													</div>
-												<?php } ?>
+									<?php if( isset($_SESSION['error']) && $_SESSION['error'] ) { ?>
+										<div class="alert alert-danger" role="alert">
+											<?php
+												echo $_SESSION['error'];
+												unset($_SESSION['error']);
+											?>
+										</div>
+									<?php } ?>
 
-													<label for="inputemail"></label>
-														<input type="email" class="form-control input-sm" style="border-radius: 10rem;" name="email" id="inputemail" placeholder="Email" required>
-											</div>
+									<?php if( isset($_SESSION['success']) && $_SESSION['success'] ) { ?>
+										<div class="alert alert-success" role="alert">
+											<?php
+												echo $_SESSION['success'];
+												unset($_SESSION['success']);
+											?>
+										</div>
+									<?php } ?>
 
-											<div class="col-md-12 col-xs-6">
-													<label for="inputpass"></label>
-													<div class="form-group">
-														<input type="password" class="form-control input-sm" style="border-radius: 10rem;" id="inputpass" name="p1"  placeholder="Password">
-														<div class="text-center" style="margin-top: 5px;">
+										<label for="inputemail"></label>
+										<input type="email" class="form-control input-sm" style="border-radius: 10rem;" name="email" id="inputemail" placeholder="Email" required>
+									</div>
 
-														<br><hr><br>
-															<input type="submit"class="btn btn-primary btn-block" name="login" id="login" value="Login">
-															<a class="btn btn-success btn-block" class="form-control input-sm" href="register.php?u=1" role="button">Register Dental Clinic</a>
-														</div>
-													</div>
+									<div class="col-md-12 col-xs-6">
+										<label for="inputpass"></label>
+										<div class="form-group">
+											<input type="password" class="form-control input-sm" style="border-radius: 10rem;" id="inputpass" name="p1"  placeholder="Password">
+											<div class="text-center" style="margin-top: 5px;">
+
+											<br><hr><br>
+												<input type="submit"class="btn btn-primary btn-block" name="login" id="login" value="Login">
 											</div>
 										</div>
 									</div>
-								</form>		
+								</div>
 							</div>
-						<?php
-							}
-						?>
-					</div>
-				</div>
+						</div>
+					</form>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

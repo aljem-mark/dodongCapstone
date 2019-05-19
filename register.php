@@ -1,7 +1,7 @@
 <?php include 'header.php'; ?>
 
 	<div class="row justify-content-center">
-		<div class="col-md-8">
+		<div class="col-md-6 col-sm-10">
 			<div class="card mt-4">
 				<div class="card-header">
 					<h1 class="mb-0">Registration</h1>
@@ -42,12 +42,17 @@
 								<input type="text" class="form-control" id="inputaddress" name="address" placeholder="Address">
 							</div>
 							<div class="form-group col-md-6">
-									<div class="radio" style="padding: 10px;">
-										<label>Gender<br>
-											<input  type="radio" name="gender" value="m" checked>Male
-											<input type="radio" name="gender" value="f">Female
-											</label>
+								<label>Gender</label>
+								<div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="gender" value="male" id="gender-male">
+										<label class="form-check-label" for="gender-male">Male</label>
 									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="gender" value="female" id="gender-female">
+										<label class="form-check-label" for="gender-female">Female</label>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="form-group">

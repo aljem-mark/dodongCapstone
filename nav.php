@@ -77,4 +77,4 @@
 			</div>
 		</nav>
 
-		<main role="main" class="col-md-9 ml-sm-auto col-lg-10 mt-4" style="padding-top: 40px;">
+		<main role="main" class="col-md-9 ml-sm-auto col-lg-10" style="padding-top: 56px;">

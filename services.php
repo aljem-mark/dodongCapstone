@@ -60,7 +60,7 @@
 
 ?>
 
-	<div class="row align-items-end mb-4">
+	<div class="row align-items-end my-4">
 		<div class="col">
 			<h1 class="mb-0">Clinic Services</h1>
 		</div>

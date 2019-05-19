@@ -30,7 +30,10 @@
 		else :
 	
 	?>
-		<main role="main" class="col" style="padding-top: 40px;">
+
+		<div class="container-fluid">
+			<div class="row">
+				<main role="main" class="col" style="padding-top: 56px;">
 	
 	<?php endif; ?>
 

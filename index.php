@@ -27,7 +27,7 @@
 			<div class="row">
 				<div class="col-auto ml-auto my-3">
 					<a href="login.php" class="btn btn-outline-secondary btn-lg font-weight-bold mr-2" name="clinic">Sign in</a>
-					<a href="register.php" class="btn btn-primary btn-lg font-weight-bold" name="clinic">Sign up</a>
+					<a href="addclinic.php" class="btn btn-outline-info btn-lg font-weight-bold" name="clinic">Register Clinic</a>
 				</div>
 			</div>
 
@@ -42,7 +42,7 @@
 						<div>
 							<p style="font-family: century gothic">Search for Dental Clinic around Cagayan de Oro</p>
 						</div>
-						<div>
+						<div class="mb-3">
 							<a href="cliniclist.php" class="btn btn-info btn-lg" name="clinic">View List</a>
 						</div>
 					</div>
