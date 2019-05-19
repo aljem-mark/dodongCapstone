@@ -7,13 +7,23 @@
 			$email = $_POST['email'];
 			$password = $_POST['p1'];
 		
-			$query = "SELECT A.*, ifnull(B.id,'No Clinic') as idClinic FROM user as A LEFT JOIN clinic as B ON A.id = B.user_id WHERE email = '".$email."'  AND  pass = '".$password."' LIMIT 1";
+			$query = "SELECT A.*, ifnull(B.id,'No Clinic') as idClinic, B.status FROM user as A LEFT JOIN clinic as B ON A.id = B.user_id WHERE email = '".$email."'  AND  pass = '".$password."' LIMIT 1";
 
 			if(!$result = mysqli_query($con, $query)) {
 				$_SESSION['error'] = 'Invalid Username/Password';
-				header("location: index.php");
+				header("location: login.php");
 			} else {
 				while($row = mysqli_fetch_assoc($result)){
+					if ($row['type'] != 1) {
+						if ($row['status'] == 'pending') {
+							$_SESSION['error'] = 'This account is not yet verified';
+							http_response_code( 303 ); header( "Location: login.php" ); exit;
+						} elseif ($row['status'] == 'disabled') {
+							$_SESSION['error'] = 'This account is disabled by the admin';
+							http_response_code( 303 ); header( "Location: login.php" ); exit;
+						}
+					}
+
 					$_SESSION['userFullname'] = ucwords($row['fname']." ".$row['mname']." ".$row['lname']); 
 					$_SESSION['userType'] = $row['type'];
 					$_SESSION['uid'] = $row['id'];
@@ -61,7 +71,7 @@
 										<hr>
 									</div>
 
-									<?php if( isset($_SESSION['error']) && $_SESSION['error'] ) { ?>
+									<?php if( isset($_SESSION['error']) ) { ?>
 										<div class="alert alert-danger" role="alert">
 											<?php
 												echo $_SESSION['error'];
@@ -70,7 +80,7 @@
 										</div>
 									<?php } ?>
 
-									<?php if( isset($_SESSION['success']) && $_SESSION['success'] ) { ?>
+									<?php if( isset($_SESSION['success']) ) { ?>
 										<div class="alert alert-success" role="alert">
 											<?php
 												echo $_SESSION['success'];

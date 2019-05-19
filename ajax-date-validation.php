@@ -9,11 +9,18 @@
         $error = "Please select present or future dates.";
         $return = ['error' => $error];
     } else {
+        $initialQuery = "";
+        $where = [];
+
         $initialQuery = "SELECT count(*) as appointment_count
             FROM `appointments`";
     
-        $where[] = "WHERE appointment_date='{$appointmentDate}'";
-        $whereClause = implode(" AND ", $where);
+        $where[] = "appointment_date='{$appointmentDate}'";
+        $where[] = "clinic_id={$_SESSION['ClinicID']}";
+        $where[] = "status IN ('pending', 'accepted')";
+
+        $whereClause = $where ? "WHERE " : "";
+        $whereClause .= implode(" AND ", $where);
     
         $query = "{$initialQuery} {$whereClause}";
     

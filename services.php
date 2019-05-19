@@ -115,6 +115,7 @@
 						<select class="form-control shadow" id="services-sort-column" name="c" data-reset-value="service_name">
 							<option value="service_name" <?= $filter['c'] == 'service_name' ? ' selected="selected"' : ''; ?>>Service Name</option>
 							<option value="description" <?= $filter['c'] == 'description' ? ' selected="selected"' : ''; ?>>Description</option>
+							<option value="price" <?= $filter['c'] == 'price' ? ' selected="selected"' : ''; ?>>Price</option>
 							<option value="date_created" <?= $filter['c'] == 'date_created' ? ' selected="selected"' : ''; ?>>Date Created</option>
 							<option value="date_updated" <?= $filter['c'] == 'date_updated' ? ' selected="selected"' : ''; ?>>Date Updated</option>
 						</select>

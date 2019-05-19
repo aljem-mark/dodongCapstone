@@ -1,5 +1,4 @@
 <?php include 'config.php'; ?>
-<?php include 'auth-checker.php'; ?>
 
 <?php
 

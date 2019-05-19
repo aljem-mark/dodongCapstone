@@ -2,12 +2,15 @@
 
 	<?php $clinicId = $_GET['clinic_id']; ?>
 
-	<div class="row justify-content-center">
+	<div class="row justify-content-center my-4">
 		<div class="col-lg-4 col-md-6 col-sm-10">
 
 			<?php if( isset($_SESSION['success']) && $_SESSION['success'] ) { ?>
 
-				<div class="alert alert-success" role="alert">
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 					<h4 class="alert-heading">Thank you for contacting us.</h4>
 					<p class="mb-0">We have received your enquiry and will respond to you within 24 hours.</p>
 				</div>
@@ -18,7 +21,10 @@
 
 			<?php if( isset($_SESSION['error']) && $_SESSION['error'] ) { ?>
 
-				<div class="alert alert-danger" role="alert">
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 					<h4 class="alert-heading">Oops.</h4>
 					<p class="mb-0">An error occured while sending your request. Please try again.</p>
 				</div>
@@ -43,8 +49,8 @@
 							<input type="tel" class="form-control" name="customer_contact" id="customerContact" placeholder="Contact No." pattern="^-?\d+$" required>
 						</div>
 						<div class="form-group">
-							<label for="clinic_services_list">Service *</label>
-							<select class="form-control" name="clinic_services_list" id="clinic_services_list" required>
+							<label for="clinic_services_list">Service</label>
+							<select class="form-control" name="clinic_services_list" id="clinic_services_list">
 								<option value="0">Choose...</option>
 								<?php   
 
@@ -66,8 +72,8 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label for="descriptionid">Description *</label>
-								<textarea class="form-control" id="descriptionid" name="description" rows="3" required placeholder="Description"></textarea>
+								<label for="descriptionid">Description</label>
+								<textarea class="form-control" id="descriptionid" name="description" rows="3" placeholder="Description"></textarea>
 							</div>
 							<input type="submit" class="btn btn-primary" name="save" value="Submit">
 							<a class="btn btn-secondary" href="cliniclist.php" role="button">Cancel</a>

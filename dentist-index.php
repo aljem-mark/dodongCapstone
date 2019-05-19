@@ -275,7 +275,7 @@
 
 	<!-- Modal for Accept -->
 	<div class="modal fade" id="accept-request-modal" tabindex="-1" role="dialog" aria-labelledby="accept-request-modal-label" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-dialog" role="document">
 			<form method="POST" action="dentist-appointment-action.php">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -299,7 +299,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" name="action" class="btn btn-primary" value="accepted">Submit</button>
+						<button type="submit" name="action" id="appointment-modal-submit" class="btn btn-primary" value="accepted">Submit</button>
 					</div>
 				</div>
 			</form>
@@ -347,9 +347,11 @@
 			var data = {date: selectedDate}
 			$.get('ajax-date-validation.php', data, function(response) {
 				if(response.error) {
+					$('#appointment-modal-submit').attr('disabled', true)
 					$('#appointment-modal-error-message').text(response.error)
 					$('#appointment-modal-error').removeClass('d-none')
 				} else {
+					$('#appointment-modal-submit').attr('disabled', false)
 					$('#appointment-modal-error').addClass('d-none')
 				}
 			}, "json");

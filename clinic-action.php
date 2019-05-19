@@ -6,18 +6,18 @@
 
     if(isset($_POST['save'])) {
 
-        if($_POST['p1'] === $_POST['p2']) {
-            $password == $_POST['p1'];
-        } else {
-            $_SESSION['error'] == "Password does not match";
-            http_response_code( 303 ); header( "Location: {$redirectUrl}" ); exit;
-        }
-
         $userQuery = "";
         $userWhere = [];
 
         $password = "";
         $userType = 2;
+
+        if($_POST['p1'] === $_POST['p2']) {
+            $password = $_POST['p1'];
+        } else {
+            $_SESSION['error'] == "Password does not match";
+            http_response_code( 303 ); header( "Location: {$redirectUrl}" ); exit;
+        }
         
         $address = stripslashes($_POST['address']);
 		$address = htmlentities($address);
@@ -58,6 +58,13 @@
         $userFinalQuery = "{$userQuery} {$userWhereClause}";
 
         $userResult = mysqli_query($con, $userQuery);
+        
+        if (mysqli_error($con)) {
+            $_SESSION['error'] = "Email <span class='font-weight-bold'>{$_POST['email']}</span> already exists!";
+            http_response_code( 303 ); header( "Location: {$redirectUrl}" ); exit;
+        }
+        die('shit');
+
         $userId = mysqli_insert_id($con);
 
         if($_FILES['media']) {

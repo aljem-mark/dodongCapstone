@@ -159,13 +159,22 @@
 		})
 
 		$('#registration-upload').on('change', function(e) {
-			var fileName = e.target.files[0].name
+			var file = e.target.files[0]
+			var fileName = file.name
 			var $imgPreview = $('#registration-img-preview')
+			var reader  = new FileReader();
+
+			reader.addEventListener("load", function () {
+				$imgPreview.attr('src', reader.result)
+			}, false);
+
+			if (file) {
+				reader.readAsDataURL(file);
+			}
 			
 			$('#registration-upload-label').text(fileName)
-			$imgPreview.attr('src', 'uploads/'+fileName)
 			$imgPreview.attr('alt', fileName)
-			$imgPreview.removeClass('d-none')
+			$imgPreview.removeClass('d-none')		
 		})
 	})
 
