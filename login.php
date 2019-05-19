@@ -23,8 +23,8 @@
 						$_SESSION['homepage'] = "dentist-index.php";
 						header("location: dentist-index.php");
 					} elseif ($row['type'] == 1) {
-						$_SESSION['homepage'] = "admin.php";
-						header("location: admin.php");
+						$_SESSION['homepage'] = "admin-index.php";
+						header("location: admin-index.php");
 					} else {
 						$_SESSION['homepage'] = "index.php";
 						header("location: index.php");

@@ -1,7 +1,7 @@
 <?php include 'header.php' ?>
+<?php include 'auth-checker.php'; ?>
 
-
-	<div class="row">
+	<div class="row my-4">
 		<div class="col-md-12 ">
 			<div class="card">
 				<div class="card-header"><?php echo $_SESSION['userFullname']; ?></div>

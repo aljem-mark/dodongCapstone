@@ -83,7 +83,7 @@
 			<form method="POST" action="dentist-appointment-action.php" id="appointment-filter-form" class="border border-dark rounded shadow p-3">
 				<div class="form-row align-items-end mb-3">
 					<div class="col-3 mr-auto">
-						<label for="appointment-search-bar">(Customer, Contact No., Service and Description)</label>
+						<label for="appointment-search-bar" class="font-weight-bold">(Customer, Contact No., Service and Description)</label>
 						<div class="input-group shadow">
 							<input type="search" class="form-control" id="appointment-search-bar" name="f" aria-label="Search for ..." placeholder="Search for ..." aria-describedby="search-icon" value="<?= $filter['f']; ?>"/>
 							<div class="input-group-append">
@@ -92,22 +92,22 @@
 						</div>
 					</div>
 					<div class="col-auto">
-						<label for="appointment-date-type">Date Range Type</label>
+						<label for="appointment-date-type" class="font-weight-bold">Date Range Type</label>
 						<select class="form-control shadow" id="appointment-date-type" name="drt" data-reset-value="date_created">
 							<option value="date_created" <?= $filter['drt'] == 'date_created' ? ' selected="selected"' : ''; ?>>Date Requested</option>
 							<option value="appointment_date" <?= $filter['drt'] == 'appointment_date' ? ' selected="selected"' : ''; ?>>Appointment Date</option>
 						</select>
 					</div>
 					<div class="col-auto">
-						<label for="appointment-date-start">Date Start</label>
+						<label for="appointment-date-start" class="font-weight-bold">Date Start</label>
 						<input type="date" class="form-control shadow" id="appointment-date-start" name="date_start" value="<?= $filter['date_start']; ?>" data-reset-value="<?= date('Y-m-d'); ?>"/>
 					</div>
 					<div class="col-auto">
-						<label for="appointment-date-end">Date End</label>
+						<label for="appointment-date-end" class="font-weight-bold">Date End</label>
 						<input type="date" class="form-control shadow" id="appointment-date-end" name="date_end" value="<?= $filter['date_end']; ?>"/>
 					</div>
 					<div class="col-auto">
-						<label for="appointment-sort-status">Status</label>
+						<label for="appointment-sort-status" class="font-weight-bold">Status</label>
 						<select class="form-control shadow" id="appointment-sort-status" name="s" data-reset-value="all">
 							<option value="all" <?= $filter['s'] == 'all' ? ' selected="selected"' : ''; ?>>All</option>
 							<option value="pending" <?= $filter['s'] == 'pending' ? ' selected="selected"' : ''; ?>>Pending</option>
@@ -118,13 +118,14 @@
 						</select>
 					</div>
 					<div class="col-auto">
-						<label for="appointment-sort-column">Column</label>
+						<label for="appointment-sort-column" class="font-weight-bold">Sort By</label>
 						<select class="form-control shadow" id="appointment-sort-column" name="c" data-reset-value="id">
 							<option value="id" <?= $filter['c'] == 'id' ? ' selected="selected"' : ''; ?>>ID</option>
 							<option value="customer_name" <?= $filter['c'] == 'customer_name' ? ' selected="selected"' : ''; ?>>Customer</option>
 							<option value="description" <?= $filter['c'] == 'description' ? ' selected="selected"' : ''; ?>>Description</option>
 							<option value="date_created" <?= $filter['c'] == 'date_created' ? ' selected="selected"' : ''; ?>>Date Requested</option>
 							<option value="appointment_date" <?= $filter['c'] == 'appointment_date' ? ' selected="selected"' : ''; ?>>Appointment Date</option>
+							<option value="status" <?= $filter['c'] == 'status' ? ' selected="selected"' : ''; ?>>Status</option>
 						</select>
 					</div>
 					<div class="col-auto">

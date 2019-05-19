@@ -1,4 +1,5 @@
-<?php include'header.php'; ?>
+<?php include 'header.php'; ?>
+<?php include 'auth-checker.php'; ?>
 
 <?php
 
@@ -7,22 +8,19 @@
 	} else {
 		$filter = [
 			'f' => '',
+			's' => 'all',
 			'c' => 'name',
 			'd' => 'asc'
 		];
 	}
 
 	$initialQuery = "SELECT c.*,
-        GROUP_CONCAT(DISTINCT CONCAT(cs.service_name,'<!!!>',cs.price,'<!!!>',cs.enabled) ORDER BY cs.service_name ASC SEPARATOR '|') as services,
         u.filename
         FROM `clinic` as c
-        LEFT JOIN `clinic_services` as cs
-        ON cs.clinic_id=c.id
         LEFT JOIN `uploads` as u
         ON u.id=c.profile_media_id";
 
     $where = [];
-    $where[] = "c.status='verified'";
 	
 	if($filter['f']) {
 		$filterWhere = [];
@@ -31,10 +29,13 @@
 		$filterWhere[] = "c.name LIKE '{$filterVal}'";
 		$filterWhere[] = "c.address LIKE '{$filterVal}'";
 		$filterWhere[] = "c.contact LIKE '{$filterVal}'";
-		$filterWhere[] = "cs.service_name LIKE '{$filterVal}'";
 		$filterWhere[] = "c.description LIKE '{$filterVal}'";
 
 		if($filterWhere) $where[] = "(" . implode(" OR ", $filterWhere) . ")";
+	}
+
+	if($filter['s'] != 'all') {
+		$where[] = "c.status='{$filter['s']}'";
 	}
 
 	if($filter['c']) {
@@ -47,44 +48,52 @@
 		$orderClause = "ORDER BY " . implode(", ", $order);
     }
 
-	if($where) {
-        $whereClause = "WHERE ";
-    } else {
-        $whereClause = "";
-    }
-
+    $whereClause = $where ? "WHERE " : "";
 	$whereClause .= implode(" AND ", $where);
 
-    $query = "{$initialQuery} {$whereClause} GROUP BY c.id {$orderClause}";
+    $query = "{$initialQuery} {$whereClause} {$orderClause}";
 
 ?>
 
-    <h1 class="sr-only mb-0">Dental Finder</h1>
-
+    <div class="row align-items-end my-4">
+		<div class="col">
+			<h1 class="mb-0">Clinics</h1>
+		</div>
+	</div>
 	<div class="row my-4">
 		<div class="col">
-			<form method="POST" action="search-engine-action.php" id="search-engine-filter-form">
+			<form method="POST" action="admin-action.php" id="admin-clinic-filter-form" class="border border-dark rounded shadow p-3">
 				<div class="form-row align-items-end mb-3">
 					<div class="col-6 mr-auto">
-						<label for="search-engine-search-bar" class="sr-only">Search for (Clinic, Dentist, Services and Location)</label>
+						<label for="admin-clinic-search-bar" class="font-weight-bold">(Clinic, Dentist and Location)</label>
 						<div class="input-group shadow">
-							<input type="search" class="form-control" id="search-engine-search-bar" name="f" aria-label="Search for ..." placeholder="Search for ..." aria-describedby="search-icon" value="<?= $filter['f']; ?>"/>
+							<input type="search" class="form-control" id="admin-clinic-search-bar" name="f" aria-label="Search for ..." placeholder="Search for ..." aria-describedby="search-icon" value="<?= $filter['f']; ?>"/>
 							<div class="input-group-append">
 								<span class="input-group-text" id="search-icon"><i class="fas fa-search"></i></span>
 							</div>
 						</div>
 					</div>
 					<div class="col-auto">
-						<label for="search-engine-sort-column" class="font-weight-bold">Sort By</label>
-						<select class="form-control shadow" id="search-engine-sort-column" name="c" data-reset-value="name">
-							<option value="name" <?= $filter['c'] == 'name' ? ' selected="selected"' : ''; ?>>Clinic</option>
-							<option value="description" <?= $filter['c'] == 'description' ? ' selected="selected"' : ''; ?>>Description</option>
-							<option value="price" <?= $filter['c'] == 'price' ? ' selected="selected"' : ''; ?>>Price</option>
+						<label for="appointment-sort-status" class="font-weight-bold">Status</label>
+						<select class="form-control shadow" id="appointment-sort-status" name="s" data-reset-value="all">
+							<option value="all" <?= $filter['s'] == 'all' ? ' selected="selected"' : ''; ?>>All</option>
+							<option value="pending" <?= $filter['s'] == 'pending' ? ' selected="selected"' : ''; ?>>Pending</option>
+							<option value="declined" <?= $filter['s'] == 'declined' ? ' selected="selected"' : ''; ?>>Declined</option>
+							<option value="disabled" <?= $filter['s'] == 'disabled' ? ' selected="selected"' : ''; ?>>Disabled</option>
+							<option value="verified" <?= $filter['s'] == 'verified' ? ' selected="selected"' : ''; ?>>Verified</option>
 						</select>
 					</div>
 					<div class="col-auto">
-						<label class="sr-only" for="search-engine-sort-direction">Sort Direction</label>
-						<select class="form-control shadow" id="search-engine-sort-direction" name="d" data-reset-value="asc">
+						<label for="admin-clinic-sort-column" class="font-weight-bold">Sort By</label>
+						<select class="form-control shadow" id="admin-clinic-sort-column" name="c" data-reset-value="name">
+							<option value="name" <?= $filter['c'] == 'name' ? ' selected="selected"' : ''; ?>>Clinic</option>
+							<option value="description" <?= $filter['c'] == 'description' ? ' selected="selected"' : ''; ?>>Description</option>
+							<option value="status" <?= $filter['c'] == 'status' ? ' selected="selected"' : ''; ?>>Status</option>
+						</select>
+					</div>
+					<div class="col-auto">
+						<label class="sr-only" for="admin-clinic-sort-direction">Sort Direction</label>
+						<select class="form-control shadow" id="admin-clinic-sort-direction" name="d" data-reset-value="asc">
 							<option value="asc" <?= $filter['d'] == 'asc' ? ' selected="selected"' : ''; ?>>ASC</option>
 							<option value="desc" <?= $filter['d'] == 'desc' ? ' selected="selected"' : ''; ?>>DESC</option>
 						</select>
@@ -92,8 +101,8 @@
 				</div>
 				<div class="form-row align-items-end">
 					<div class="col-auto">
-						<button type="button" class="btn btn-dark shadow" id="search-engine-reset-filter">Reset</button>
-						<button type="submit" class="btn btn-primary shadow" name="filter" value="1" data-reset-value="1" id="search-engine-filter-submit">Filter</button>
+						<button type="button" class="btn btn-dark shadow" id="admin-clinic-reset-filter">Reset</button>
+						<button type="submit" class="btn btn-primary shadow" name="filter" value="1" data-reset-value="1" id="admin-clinic-filter-submit">Filter</button>
 					</div>
 				</div>
 			</form>
@@ -108,7 +117,7 @@
 							<th scope="col">Preview</th>
 							<th scope="col">Clinic</th>
 							<th scope="col">Description</th>
-							<th scope="col">Services Offered</th>
+							<th scope="col">Status</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -148,59 +157,57 @@
                             </td>
 							<td><p class="m-0" style="max-width: 300px;"><?= $row['description']; ?></p></td>
 							<td>
-
+							
                                 <?php
 
-                                    if ($row['services']) :
-                                
-                                    $services = explode("|", $row['services']);
+                                    switch ($row['status']) {
+                                        case 'pending':
+                                            $statusClass = "warning";
+                                            break;
+
+                                        case 'declined':
+                                            $statusClass = "danger";
+                                            break;
+
+										case 'disabled':
+											$statusClass = "secondary";
+											break;
+
+                                        case 'verified':
+                                            $statusClass = "success";
+                                            break;
+                                        
+                                        default:
+                                            $statusClass = "warning";
+                                            break;
+                                    }
 
                                 ?>
-                                
-                                <ul class="list-group">
 
-                                    <?php
-                                
-                                        if ($services) foreach ($services as $key => $value) :
-                                            $service = explode("<!!!>", $value);
-                                            $serviceName = $service[0];
-                                            $servicePrice = number_format($service[1], 2);
-                                            $serviceStatus = $service[2];
-                                    ?>
-
-                                        <li class='list-group-item <?= $serviceStatus ? '' : 'list-group-item-danger' ; ?>'>
-                                            <div class="row justify-content-between">
-                                                <div class="col-auto">
-                                                    <h6 class="mb-0"><?= $serviceName; ?></h6>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <span><?= $servicePrice; ?></span>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    <?php endforeach; ?>
-
-                                </ul>
-
-                                <?php else : ?>
-
-                                    <li class='list-group-item list-group-item-info'>
-                                        <h6 class="mb-0">No services registered</h6>
-                                    </li>
-
-                                <?php endif; ?>
-
-							</td>
+                                <h5><span class="badge badge-<?= $statusClass; ?> badge-pill text-capitalize"><?= $row['status']; ?></span></h5></td>
 							<td>
-								<form method="POST" action="search-engine-action.php">
+								<form method="POST" action="admin-action.php">
 									<input type="hidden" name="id" value="<?= $row['id']; ?>">
 
                                     <!-- Trigger Modal -->
-                                    <button type="button" data-toggle="modal" data-target="#clinicEmbedMap" data-clinic="<?= $row['name'] ?>" data-embed="<?= $row["embed"]; ?>" class="btn btn-secondary btn-sm">Show Map</button>
+                                    <button type="button" data-toggle="modal" data-target="#clinicEmbedMap" data-clinic="<?= $row['name'] ?>" data-embed="<?= $row["embed"]; ?>" class="btn btn-info btn-sm">Show Map</button>
 
-                                    <!-- Link to Request Appointment -->
-                                    <a href="appointment.php?clinic_id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Request Appointment</button>
+                                    
+									<!-- Update Status Buttons -->
+                                    <?php if ($row['status'] == 'verified') : ?>
+
+                                        <button type="submit" value="disabled" name="action" class="btn btn-secondary btn-sm">Disable</button>
+
+                                    <?php elseif ($row['status'] == 'disabled') : ?>
+
+                                        <button type="submit" value="verified" name="action" class="btn btn-success btn-sm">Enable</button>
+
+                                    <?php elseif ($row['status'] == 'pending') : ?>
+
+                                        <button type="submit" value="declined" name="action" class="btn btn-danger btn-sm">Decline</button>
+                                        <button type="submit" value="verified" name="action" class="btn btn-success btn-sm">Verify</button>
+
+                                    <?php endif; ?>
 									
 								</form>
 							</td>
@@ -259,8 +266,8 @@
             modal.find('#embed-map-container').html(embedMap)
         })
 
-        $('#search-engine-reset-filter').on('click', function(e) {
-            var filterForm = document.getElementById('search-engine-filter-form')
+        $('#admin-clinic-reset-filter').on('click', function(e) {
+            var filterForm = document.getElementById('admin-clinic-filter-form')
 
             for (var i = 0; i < filterForm.elements.length; i++) {
                 if(typeof $(filterForm.elements.item(i)).data('resetValue') === 'undefined') {
@@ -270,7 +277,7 @@
                 }
             }
 
-            $('#search-engine-filter-submit').click()
+            $('#admin-clinic-filter-submit').click()
         })
     })
 

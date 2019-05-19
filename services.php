@@ -1,4 +1,5 @@
 <?php include 'header.php'; ?>
+<?php include 'auth-checker.php'; ?>
 
 <?php
 
@@ -10,7 +11,8 @@
 			'drt' => 'date_created',
 			'date_start' => '',
 			'date_end' => '',
-			'c' => 'id',
+			's' => 'all',
+			'c' => 'service_name',
 			'd' => 'asc'
 		];
 	}
@@ -28,6 +30,10 @@
 		$filterWhere[] = "description LIKE '{$filterVal}'";
 
 		if($filterWhere) $where[] = "(" . implode(" OR ", $filterWhere) . ")";
+	}
+
+	if($filter['s'] != 'all') {
+		$where[] = "enabled='{$filter['s']}'";
 	}
 
 	if($filter['date_start'] && $filter['date_end']) {
@@ -73,7 +79,7 @@
 			<form method="POST" action="dentist-services-action.php" id="services-filter-form" class="border border-dark rounded shadow p-3">
 				<div class="form-row align-items-end mb-3">
 					<div class="col-3 mr-auto">
-						<label for="services-search-bar">(Service name and Description)</label>
+						<label for="services-search-bar" class="font-weight-bold">(Service name and Description)</label>
 						<div class="input-group shadow">
 							<input type="search" class="form-control" id="services-search-bar" name="f" aria-label="Search for ..." placeholder="Search for ..." aria-describedby="search-icon" value="<?= $filter['f']; ?>"/>
 							<div class="input-group-append">
@@ -82,24 +88,31 @@
 						</div>
 					</div>
 					<div class="col-auto">
-						<label for="service-date-type">Date Range Type</label>
+						<label for="service-date-type" class="font-weight-bold">Date Range Type</label>
 						<select class="form-control shadow" id="service-date-type" name="drt" data-reset-value="date_created">
 							<option value="date_created" <?= $filter['drt'] == 'date_created' ? ' selected="selected"' : ''; ?>>Date Created</option>
 							<option value="date_updated" <?= $filter['drt'] == 'date_updated' ? ' selected="selected"' : ''; ?>>Date Updated</option>
 						</select>
 					</div>
 					<div class="col-auto">
-						<label for="service-date-start">Date Start</label>
+						<label for="service-date-start" class="font-weight-bold">Date Start</label>
 						<input type="date" class="form-control shadow" id="service-date-start" name="date_start" value="<?= $filter['date_start']; ?>"/>
 					</div>
 					<div class="col-auto">
-						<label for="service-date-end">Date End</label>
+						<label for="service-date-end" class="font-weight-bold">Date End</label>
 						<input type="date" class="form-control shadow" id="service-date-end" name="date_end" value="<?= $filter['date_end']; ?>"/>
 					</div>
 					<div class="col-auto">
-						<label for="services-sort-column">Column</label>
-						<select class="form-control shadow" id="services-sort-column" name="c" data-reset-value="id">
-							<option value="id" <?= $filter['c'] == 'id' ? ' selected="selected"' : ''; ?>>ID</option>
+						<label for="appointment-sort-status" class="font-weight-bold">Status</label>
+						<select class="form-control shadow" id="appointment-sort-status" name="s" data-reset-value="all">
+							<option value="all" <?= $filter['s'] == 'all' ? ' selected="selected"' : ''; ?>>All</option>
+							<option value="1" <?= $filter['s'] == '1' ? ' selected="selected"' : ''; ?>>Enabled</option>
+							<option value="0" <?= $filter['s'] == '0' ? ' selected="selected"' : ''; ?>>Disabled</option>
+						</select>
+					</div>
+					<div class="col-auto">
+						<label for="services-sort-column" class="font-weight-bold">Sort By</label>
+						<select class="form-control shadow" id="services-sort-column" name="c" data-reset-value="service_name">
 							<option value="service_name" <?= $filter['c'] == 'service_name' ? ' selected="selected"' : ''; ?>>Service Name</option>
 							<option value="description" <?= $filter['c'] == 'description' ? ' selected="selected"' : ''; ?>>Description</option>
 							<option value="date_created" <?= $filter['c'] == 'date_created' ? ' selected="selected"' : ''; ?>>Date Created</option>
@@ -129,12 +142,12 @@
 				<table class="table">
 					<thead class="thead-dark">
 						<tr>
-							<th scope="col">#</th>
 							<th scope="col">Service Name</th>
 							<th scope="col">Description</th>
 							<th scope="col">Price</th>
 							<th scope="col">Date Created</th>
 							<th scope="col">Date Updated</th>
+							<th scope="col">Status</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -143,7 +156,6 @@
 						<?php if($result = mysqli_query($con, $query)) : while ($row = mysqli_fetch_assoc($result)) : ?>
 
 						<tr>
-							<td scope="row"><?= $row['id']; ?></td>
 							<td><?= $row['service_name']; ?></td>
 							<td><p class="m-0" style="max-width: 300px;"><?= $row['description']; ?></p></td>
 							<td>
@@ -182,6 +194,31 @@
 
 								?>
 
+							</td>
+							<td>
+							
+								<?php
+
+									switch ($row['enabled']) {
+										case '1':
+											$statusClass = "success";
+											$statusValue = "Enabled";
+											break;
+
+										case '0':
+											$statusClass = "danger";
+											$statusValue = "Disabled";
+											break;
+										
+										default:
+											$statusClass = "danger";
+											$statusValue = "Disabled";
+											break;
+									}
+
+								?>
+
+								<h5><span class="badge badge-<?= $statusClass; ?> badge-pill text-capitalize"><?= $statusValue; ?></span></h5>
 							</td>
 							<td>
 								<form method="POST" action="dentist-services-action.php">

@@ -22,6 +22,10 @@
 
             <?php else : ?>
 
+                <li class="nav-item mr-2">
+                    <a class="nav-link" href="cliniclist.php" >View Clinic List</a>
+                </li>
+
                 <form class="form-inline">
                     <a class="btn btn-secondary mr-2" href="login.php">Sign in</a>
                     <a class="btn btn-info" href="addclinic.php">Register Clinic</a>

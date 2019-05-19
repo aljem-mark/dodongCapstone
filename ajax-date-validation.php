@@ -1,6 +1,7 @@
 <?php
 
     include 'config.php';
+    include 'auth-checker.php';
 
     $appointmentDate = $_GET['date'];
 
