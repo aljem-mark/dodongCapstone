@@ -122,8 +122,13 @@
 						</tr>
 					</thead>
 					<tbody>
+							
+						<?php
 
-						<?php if($result = mysqli_query($con, $query)) : while ($row = mysqli_fetch_assoc($result)) : ?>
+							$result = mysqli_query($con, $query);
+							if(mysqli_num_rows($result)) : while ($row = mysqli_fetch_assoc($result)) :
+							
+						?>
 
 						<tr>
 							<td scope="row">

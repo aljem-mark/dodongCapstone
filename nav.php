@@ -44,6 +44,18 @@
 								</div>
 							</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="users-list.php">
+								<div class="row">
+									<div class="col-1">
+										<i class="fas fa-user mr-1"></i>
+									</div>
+									<div class="col">
+										Users
+									</div>
+								</div>
+							</a>
+						</li>
 
 					<?php elseif($_SESSION['userType'] == 2) : ?>
 
@@ -93,7 +105,7 @@
 										<i class="fas fa-wrench mr-1"></i>
 									</div>
 									<div class="col">
-									Services
+										Services
 									</div>
 								</div>
 							</a>

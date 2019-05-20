@@ -2,17 +2,27 @@
 
 	<?php
 
+		// update all user password to md5
+		// $query = "SELECT * FROM `user` WHERE 1";
+			
+		// $result = mysqli_query($con, $query);
+
+		// while($row = mysqli_fetch_assoc($result)) {
+		// 	$newpass = md5($row['pass']);
+		// 	$uquery = "UPDATE `user` SET pass='{$newpass}' WHERE id={$row['id']}";
+		// 	$update = mysqli_query($con, $uquery);
+		// }
+
 		if (isset($_POST['login']))
 		if ($_POST['login']) {
 			$email = $_POST['email'];
-			$password = $_POST['p1'];
+			$password = md5($_POST['p1']);
 		
 			$query = "SELECT A.*, ifnull(B.id,'No Clinic') as idClinic, B.status FROM user as A LEFT JOIN clinic as B ON A.id = B.user_id WHERE email = '".$email."'  AND  pass = '".$password."' LIMIT 1";
+			
+			$result = mysqli_query($con, $query);
 
-			if(!$result = mysqli_query($con, $query)) {
-				$_SESSION['error'] = 'Invalid Username/Password';
-				header("location: login.php");
-			} else {
+			if (mysqli_num_rows($result)) {
 				while($row = mysqli_fetch_assoc($result)){
 					if ($row['type'] != 1) {
 						if ($row['status'] == 'pending') {
@@ -40,6 +50,9 @@
 						header("location: index.php");
 					}
 				}
+			} else {
+				$_SESSION['error'] = 'Invalid Username/Password';
+				http_response_code( 303 ); header( "Location: login.php" ); exit;
 			}
 		}
 	?>

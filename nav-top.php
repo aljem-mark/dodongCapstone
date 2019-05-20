@@ -11,7 +11,7 @@
                 <li class="nav-item dropdown mr-2">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['userFullname']; ?></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="userprofile.php">Profile</a>
+                        <a class="dropdown-item" href="profile-edit.php?user_id=<?= $_SESSION['uid']; ?>">Profile</a>
                         <!-- Triggers the logout form -->
                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="logout.php" method="POST">
