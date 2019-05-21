@@ -22,6 +22,7 @@
 		LEFT JOIN `clinic_services` as cs ON cs.id = a.idServ";
 
 	$where[] = "WHERE a.clinic_id={$_SESSION['ClinicID']}";
+    $where[] = "a.deleted_at IS NULL";
 	
 	if($filter['f']) {
 		$filterWhere = [];
@@ -266,6 +267,8 @@
 									
 									<?php endif; ?>
 									
+									<!-- Trigger Delete Modal -->
+									<button type="button" data-toggle="modal" data-target="#delete-modal" data-id="<?= $row['id']; ?>" class="btn btn-danger btn-sm" title="delete"><i class="fas fa-times"></i></button>
 								</form>
 							</td>
 						</tr>
@@ -311,11 +314,47 @@
 		</div>
 	</div>
 
+	<!-- Delete Modal -->
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form method="POST" action="dentist-appointment-action.php">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="delete-modal-label">Delete</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="id" id="delete-id">
+						<p class="mb-0" id="delete-modal-error-message">Are you sure you want to delete this item?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" name="action" id="delete-modal-submit" class="btn btn-primary" value="delete">Accept</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
 <?php include 'footer.php'; ?>
 
 <script>
 
-	$(document).ready(function (){
+	$(document).ready(function () {
+		// EVENTS
+
+		// Delete Modal
+		$('#delete-modal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget)
+			var id = button.data('id')
+
+			var modal = $(this)
+			modal.find('input[type=hidden]#delete-id').val(id)
+		})
+		
+		// Accept Modal
 		$('#accept-request-modal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget)
 			var id = button.data('id')
@@ -323,15 +362,17 @@
 			var actionType = button.data('actionType')
 
 			var modal = $(this)
-			modal.find('.modal-title').text(`${actionType} Request`)
+			modal.find('#accept-request-modal-label').text(`${actionType} Request`)
 			modal.find('input[type=hidden]#appointment-id').val(id)
 			modal.find('input[type=date]#appointment-date').val(date)
 		})
 
+		// Set min date selection for filter
 		$('#appointment-date-start').on('change', function (e) {
 			$('#appointment-date-end').attr('min', $(this).val())
 		});
 
+		// Reset all filter to default
 		$('#appointment-reset-filter').on('click', function(e) {
 			var filterForm = document.getElementById('appointment-filter-form')
 
@@ -346,6 +387,7 @@
 			$('#appointment-filter-submit').click()
 		})
 
+		// Date Validation on accepting appointment
 		$('#appointment-date').on('change', function(e) {
 			selectedDate = $(this).val()
 
@@ -364,6 +406,7 @@
 	})
 
 	$(window).on('load', function(){
+		// Set the date start min date selection to today date
 		$('#appointment-date-end').attr('min', $('#appointment-date-start').val())
 	})
 

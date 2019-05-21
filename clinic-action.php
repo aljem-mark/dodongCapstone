@@ -2,7 +2,8 @@
 
 <?php
 
-    $redirectUrl = $_SESSION['homepage'];
+    $redirectUrl = preg_replace('/\?.*/', '', basename($_SERVER['HTTP_REFERER']));
+    if(!isset($_POST['gender'])) $_POST['gender'] = "";
 
     if(isset($_POST['save'])) {
         $redirectUrl = 'addclinic.php';
@@ -35,7 +36,7 @@
             `fname`,
             `mname`,
             `lname`,
-            `fname`,
+            `email`,
             `pass`,
             `gender`,
             `description`,
@@ -215,6 +216,7 @@
             http_response_code( 303 ); header( "Location: {$redirectUrl}" ); exit;
         }
 
+		$_SESSION['userFullname'] = ucwords($_POST['fname']." ".$_POST['mname']." ".$_POST['lname']); 
         $_SESSION['success'] = 1;
     }
 

@@ -1,5 +1,5 @@
 <?php include'config.php'; ?>
-
+<?php //echo md5('admin123'); ?>
 <!DOCTYPE HTML>
 <html>
 	<head>

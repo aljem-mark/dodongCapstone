@@ -10,11 +10,16 @@
 
     if(isset($_POST['action']))
     if($_POST['action']) {
-        $updateQuery = "UPDATE `appointments`
-            SET `status`='{$_POST['action']}'";
+        if($_POST['action'] == 'delete') {
+            $updateQuery = "UPDATE `appointments`
+                SET `deleted_at`=CURDATE()";
+        } else {
+            $updateQuery = "UPDATE `appointments`
+                SET `status`='{$_POST['action']}'";
 
-        if($_POST['action'] == 'accepted') {
-            $updateQuery .= ", `appointment_date`='{$_POST['appointment_date']}'";
+            if($_POST['action'] == 'accepted') {
+                $updateQuery .= ", `appointment_date`='{$_POST['appointment_date']}'";
+            }
         }
 
         $whereClause = "WHERE `id`={$_POST['id']}";

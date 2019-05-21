@@ -40,7 +40,14 @@
                         CURDATE()
                     )";
             }
-        } else {
+        }
+        elseif ($_POST['action'] == 'delete') {
+            $initialQuery = "UPDATE `clinic_services`
+                SET `deleted_at`=CURDATE()";
+                
+            $where[] = "WHERE `id`={$_POST['id']}";
+        }
+        else {
             $enabled = $_POST['action'] == 'enable' ? 1 : 0;
             $initialQuery = "UPDATE `clinic_services`
                 SET

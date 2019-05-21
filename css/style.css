@@ -83,3 +83,13 @@ small {
 .sidebar .nav-link.active {
 	color: #007bff;
 }
+
+.btn-sm {
+	margin-bottom: .25rem;
+	margin-top: .25rem;
+}
+
+.list-group-overflow {
+	max-height: 120px;
+	overflow: auto;
+}

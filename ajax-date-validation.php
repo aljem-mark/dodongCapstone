@@ -18,6 +18,7 @@
         $where[] = "appointment_date='{$appointmentDate}'";
         $where[] = "clinic_id={$_SESSION['ClinicID']}";
         $where[] = "status IN ('pending', 'accepted')";
+        $where[] = "deleted_at IS NULL";
 
         $whereClause = $where ? "WHERE " : "";
         $whereClause .= implode(" AND ", $where);

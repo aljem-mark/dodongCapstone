@@ -13,16 +13,20 @@
 	}
 
 	$initialQuery = "SELECT c.*,
-        GROUP_CONCAT(DISTINCT CONCAT(cs.service_name,'<!!!>',cs.price,'<!!!>',cs.enabled) ORDER BY cs.service_name ASC SEPARATOR '|') as services,
+        GROUP_CONCAT(CONCAT(cs.service_name,'<!!!>',cs.price,'<!!!>',cs.enabled) ORDER BY cs.service_name ASC SEPARATOR '|') as services,
         u.filename
         FROM `clinic` as c
+        LEFT JOIN `user` as us
+        ON us.id=c.user_id
         LEFT JOIN `clinic_services` as cs
-        ON cs.clinic_id=c.id
+        ON (cs.clinic_id=c.id AND cs.deleted_at IS NULL)
         LEFT JOIN `uploads` as u
         ON u.id=c.profile_media_id";
 
     $where = [];
     $where[] = "c.status='verified'";
+    $where[] = "c.deleted_at IS NULL";
+    $where[] = "us.deleted_at IS NULL";
 	
 	if($filter['f']) {
 		$filterWhere = [];
@@ -162,7 +166,7 @@
 
                                 ?>
                                 
-                                <ul class="list-group">
+                                <ul class="list-group list-group-overflow">
 
                                     <?php
                                 

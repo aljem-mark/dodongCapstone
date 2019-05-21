@@ -15,10 +15,12 @@
 
 	$initialQuery = "SELECT id,
         email,
-        CONCAT(fname, ' ', mname, ' ', lname) as fullname
+        CONCAT(fname, ' ', mname, ' ', lname) as fullname,
+		type
         FROM `user`";
 
     $where = [];
+    $where[] = "deleted_at IS NULL";
 	
 	if($filter['f']) {
 		$filterWhere = [];
@@ -127,7 +129,15 @@
 									<input type="hidden" name="id" value="<?= $row['id']; ?>">
 									<input type="hidden" name="email" value="<?= $row['email']; ?>">
 
-                                    <button type="submit" class="btn btn-info" name="action" value="resetPassword">Reset Password</button>
+                                    <button type="submit" class="btn btn-info btn-sm" name="action" value="resetPassword">Reset Password</button>
+									
+									<?php if ($row['type'] != 1) : ?>
+
+										<!-- Trigger Delete Modal -->
+										<button type="button" data-toggle="modal" data-target="#delete-modal" data-id="<?= $row['id']; ?>" data-table="user" class="btn btn-danger btn-sm" title="delete"><i class="fas fa-times"></i></button>
+									
+									<?php endif; ?>
+
 								</form>
 							</td>
 						</tr>
@@ -140,4 +150,49 @@
 		</div>
     </div>
 
+	<!-- Delete Modal -->
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form method="POST" action="admin-action.php">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="delete-modal-label">Delete</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="id" id="delete-id">
+						<input type="hidden" name="delete-table" id="delete-table">
+
+						<p class="mb-0" id="delete-modal-error-message">Are you sure you want to delete this item?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" name="action" id="delete-modal-submit" class="btn btn-primary" value="delete">Accept</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
 <?php include'footer.php'; ?>
+
+<script type="text/javascript">
+
+    $(document).ready(function (){
+		// EVENTS
+
+		// Delete Modal
+		$('#delete-modal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget)
+			var id = button.data('id')
+			var table = button.data('table')
+
+			var modal = $(this)
+			modal.find('input[type=hidden]#delete-id').val(id)
+			modal.find('input[type=hidden]#delete-table').val(table)
+		})
+	})
+
+</script>
