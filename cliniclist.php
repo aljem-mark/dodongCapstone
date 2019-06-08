@@ -36,7 +36,7 @@
 		$filterWhere[] = "c.address LIKE '{$filterVal}'";
 		$filterWhere[] = "c.contact LIKE '{$filterVal}'";
 		$filterWhere[] = "cs.service_name LIKE '{$filterVal}'";
-		$filterWhere[] = "c.description LIKE '{$filterVal}'";
+		$filterWhere[] = "cs.price LIKE '{$filterVal}'";
 
 		if($filterWhere) $where[] = "(" . implode(" OR ", $filterWhere) . ")";
 	}

@@ -18,7 +18,7 @@
 			$email = $_POST['email'];
 			$password = md5($_POST['p1']);
 		
-			$query = "SELECT A.*, ifnull(B.id,'No Clinic') as idClinic, B.status FROM user as A LEFT JOIN clinic as B ON A.id = B.user_id WHERE email = '".$email."'  AND  pass = '".$password."' AND A.deleted_at IS NULL LIMIT 1";
+			$query = "SELECT A.*, ifnull(B.id,'No Clinic') as idClinic, B.status, B.name as clinic_name, B.contact as clinic_number FROM user as A LEFT JOIN clinic as B ON A.id = B.user_id WHERE email = '".$email."'  AND  pass = '".$password."' AND A.deleted_at IS NULL LIMIT 1";
 
 			$result = mysqli_query($con, $query);
 
@@ -40,6 +40,8 @@
 					$_SESSION['ClinicID'] = $row['idClinic'];
 
 					if ($row['type'] == 2) {
+						$_SESSION['clinic_name'] = $row['clinic_name'];
+						$_SESSION['clinic_number'] = $row['clinic_number'];
 						$_SESSION['homepage'] = "dentist-index.php";
 						header("location: dentist-index.php");
 					} elseif ($row['type'] == 1) {

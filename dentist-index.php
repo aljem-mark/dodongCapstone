@@ -251,18 +251,19 @@
 							<td>
 								<form method="POST" action="dentist-appointment-action.php">
 									<input type="hidden" name="id" value="<?= $row['id']; ?>">
+									<input type="hidden" name="contact_number" value="<?= $row['customer_contact']; ?>">
 									
 									<?php if($row['status'] == 'pending') : ?>
 
 										<!-- Trigger Accept Modal -->
-										<button type="button" data-toggle="modal" data-target="#accept-request-modal" data-id="<?= $row['id']; ?>" data-action-type="Accept" class="btn btn-primary btn-sm">Accept</button>
+										<button type="button" data-toggle="modal" data-target="#accept-request-modal" data-id="<?= $row['id']; ?>" data-contact="<?= $row['customer_contact']; ?>" data-action-type="Accept" class="btn btn-primary btn-sm">Accept</button>
 										<!-- Decline Appointment -->
 										<button type="submit" value="declined" name="action" class="btn btn-danger btn-sm">Decline</button>
 									
 									<?php elseif($row['status'] == 'accepted') : ?>
 
 										<button type="submit" value="done" name="action" class="btn btn-success btn-sm">Done</button>
-										<button type="button" data-toggle="modal" data-target="#accept-request-modal" data-id="<?= $row['id']; ?>" data-date="<?= date('Y-m-d', strtotime($row['appointment_date'])); ?>" data-action-type="Reschedule" class="btn btn-info btn-sm">Reschedule</button>
+										<button type="button" data-toggle="modal" data-target="#accept-request-modal" data-id="<?= $row['id']; ?>" data-contact="<?= $row['customer_contact']; ?>" data-date="<?= date('Y-m-d', strtotime($row['appointment_date'])); ?>" data-action-type="Reschedule" class="btn btn-info btn-sm">Reschedule</button>
 										<button type="submit" value="cancelled" name="action" class="btn btn-secondary btn-sm">Cancel</button>
 									
 									<?php endif; ?>
@@ -294,6 +295,7 @@
 					</div>
 					<div class="modal-body">
 						<input type="hidden" name="id" id="appointment-id">
+						<input type="hidden" name="contact_number" id="contact-number">
 
 						<div id="appointment-modal-error" class="alert alert-danger d-none" role="alert">
 							<h4 class="alert-heading">Oops.</h4>
@@ -358,12 +360,14 @@
 		$('#accept-request-modal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget)
 			var id = button.data('id')
+			var contact = button.data('contact')
 			var date = button.data('date')
 			var actionType = button.data('actionType')
 
 			var modal = $(this)
 			modal.find('#accept-request-modal-label').text(`${actionType} Request`)
 			modal.find('input[type=hidden]#appointment-id').val(id)
+			modal.find('input[type=hidden]#contact-number').val(contact)
 			modal.find('input[type=date]#appointment-date').val(date)
 		})
 

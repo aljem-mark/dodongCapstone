@@ -113,6 +113,16 @@
 
         $clinicResult = mysqli_query($con, $clinicQuery);
 
+        $clinicId = mysqli_insert_id($con);
+
+        $appointmentScheduleQuery = "INSERT INTO `appointment_schedules`
+            (clinic_id)
+            VALUES
+            ({$clinicId})";
+
+        $query = "{$appointmentScheduleQuery}";
+        $result = mysqli_query($con, $query);
+
         $_SESSION['success'] = 1;
     }
 
