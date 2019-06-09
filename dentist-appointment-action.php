@@ -17,7 +17,7 @@
             $updateQuery = "UPDATE `appointments`
                 SET `status`='{$_POST['action']}'";
 
-            if($_POST['action'] == 'accepted') {
+            if($_POST['action'] == 'accepted' || $_POST['action'] == 'rescheduled') {
                 $updateQuery .= ", `appointment_date`='{$_POST['appointment_date']}'";
                 
                 if (isset($smsApiKey)) {

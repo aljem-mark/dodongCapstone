@@ -9,7 +9,7 @@
 		$filter = [
 			'f' => '',
 			'drt' => 'date_created',
-			'date_start' => date('Y-m-d'),
+			'date_start' => '',
 			'date_end' => '',
 			's' => 'all',
 			'c' => 'id',
@@ -363,12 +363,14 @@
 			var contact = button.data('contact')
 			var date = button.data('date')
 			var actionType = button.data('actionType')
+			var actionButton = button.data('actionType') == 'Reschedule' ? 'rescheduled' : 'accepted'
 
 			var modal = $(this)
 			modal.find('#accept-request-modal-label').text(`${actionType} Request`)
 			modal.find('input[type=hidden]#appointment-id').val(id)
 			modal.find('input[type=hidden]#contact-number').val(contact)
 			modal.find('input[type=date]#appointment-date').val(date)
+			modal.find('#appointment-modal-submit').val(actionButton)
 		})
 
 		// Set min date selection for filter
